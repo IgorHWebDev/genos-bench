@@ -35,15 +35,19 @@ def main():
     from sklearn.metrics import roc_auc_score
     cache = f"/workspace/emb_cache/clinvar_{args.seqlen}_{args.max_train}_{args.max_test}.npz"
 
+    loaded = False
     if os.path.exists(cache):
-        z = np.load(cache)
-        n_layers = int(z["n_layers"])
-        RTr = [z[f"rtr{L}"] for L in range(n_layers)]; ATr = [z[f"atr{L}"] for L in range(n_layers)]
-        RTe = [z[f"rte{L}"] for L in range(n_layers)]; ATe = [z[f"ate{L}"] for L in range(n_layers)]
-        ytr, yte = z["ytr"], z["yte"]
-        res["emb_cache"] = "hit"; res["n_hidden_layers"] = n_layers
-        print("emb cache HIT", flush=True)
-    else:
+        try:
+            z = np.load(cache)
+            n_layers = int(z["n_layers"])
+            RTr = [z[f"rtr{L}"] for L in range(n_layers)]; ATr = [z[f"atr{L}"] for L in range(n_layers)]
+            RTe = [z[f"rte{L}"] for L in range(n_layers)]; ATe = [z[f"ate{L}"] for L in range(n_layers)]
+            ytr, yte = z["ytr"], z["yte"]
+            res["emb_cache"] = "hit"; res["n_hidden_layers"] = n_layers; loaded = True
+            print("emb cache HIT", flush=True)
+        except Exception as e:
+            res["emb_cache_load_err"] = str(e)[:150]; print("cache corrupt -> re-embed", flush=True)
+    if not loaded:
         from datasets import load_dataset
         from transformers import AutoModel, AutoTokenizer
         ds = None
