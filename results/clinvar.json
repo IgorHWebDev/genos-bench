@@ -1,0 +1,141 @@
+{
+  "task": "variant_effect_pathogenic_clinvar",
+  "target_auc": 0.9326,
+  "seqlen": 8192,
+  "head": "both",
+  "started": "2026-07-09 14:24:56",
+  "columns": [
+    "ref_forward_sequence",
+    "alt_forward_sequence",
+    "label",
+    "chromosome",
+    "position"
+  ],
+  "n_train": 10000,
+  "n_test": 1018,
+  "n_hidden_layers": 13,
+  "ref_train_done": "14:51:22",
+  "alt_train_done": "15:14:01",
+  "embed_done": "15:18:36",
+  "emb_cache": "saved",
+  "logreg_per_layer": [
+    {
+      "layer": 0,
+      "auc": 0.51
+    },
+    {
+      "layer": 1,
+      "auc": 0.5442
+    },
+    {
+      "layer": 2,
+      "auc": 0.5921
+    },
+    {
+      "layer": 3,
+      "auc": 0.6081
+    },
+    {
+      "layer": 4,
+      "auc": 0.5911
+    },
+    {
+      "layer": 5,
+      "auc": 0.6094
+    },
+    {
+      "layer": 6,
+      "auc": 0.5897
+    },
+    {
+      "layer": 7,
+      "auc": 0.5896
+    },
+    {
+      "layer": 8,
+      "auc": 0.6123
+    },
+    {
+      "layer": 9,
+      "auc": 0.5825
+    },
+    {
+      "layer": 10,
+      "auc": 0.7151
+    },
+    {
+      "layer": 11,
+      "auc": 0.905
+    },
+    {
+      "layer": 12,
+      "auc": 0.9286
+    }
+  ],
+  "logreg_best": {
+    "layer": 12,
+    "auc": 0.9286
+  },
+  "mlp_per_layer": [
+    {
+      "layer": 0,
+      "auc": 0.5413
+    },
+    {
+      "layer": 1,
+      "auc": 0.6113
+    },
+    {
+      "layer": 2,
+      "auc": 0.6238
+    },
+    {
+      "layer": 3,
+      "auc": 0.6401
+    },
+    {
+      "layer": 4,
+      "auc": 0.6362
+    },
+    {
+      "layer": 5,
+      "auc": 0.6458
+    },
+    {
+      "layer": 6,
+      "auc": 0.6351
+    },
+    {
+      "layer": 7,
+      "auc": 0.662
+    },
+    {
+      "layer": 8,
+      "auc": 0.6552
+    },
+    {
+      "layer": 9,
+      "auc": 0.6273
+    },
+    {
+      "layer": 10,
+      "auc": 0.7399
+    },
+    {
+      "layer": 11,
+      "auc": 0.92
+    },
+    {
+      "layer": 12,
+      "auc": 0.9416
+    }
+  ],
+  "mlp_best": {
+    "layer": 12,
+    "auc": 0.9416
+  },
+  "best_auc": 0.9416,
+  "best_layer": 12,
+  "delta_vs_target": 0.009,
+  "finished": "2026-07-09 15:24:20"
+}
