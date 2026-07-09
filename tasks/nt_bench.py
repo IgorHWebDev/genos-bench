@@ -34,7 +34,6 @@ def main():
 
     import torch
     from sklearn.metrics import roc_auc_score
-    multiclass = args.classes > 2
     cache = f"/workspace/emb_cache/{args.task}.npz"
 
     # ---- embeddings (cached on the volume) ----
@@ -103,6 +102,10 @@ def main():
                  **{f"tr{L}": Xtr_L[L] for L in range(n_layers)},
                  **{f"te{L}": Xte_L[L] for L in range(n_layers)})
         res["emb_cache"] = "saved"; save()
+
+    nc = int(max(int(ytr.max()), int(yte.max()))) + 1   # auto-detect #classes from labels
+    multiclass = nc > 2
+    res["n_classes"] = nc; save()
 
     def auc_of(proba):
         if multiclass:
