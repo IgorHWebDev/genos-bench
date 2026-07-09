@@ -1,0 +1,69 @@
+{
+  "task": "H3",
+  "target_auc": 0.94,
+  "started": "2026-07-09 08:19:47",
+  "dataset_repo": "InstaDeepAI/nucleotide_transformer_downstream_tasks",
+  "n_train": 13468,
+  "n_test": 1497,
+  "n_hidden_layers": 13,
+  "embed_train_done": "08:22:43",
+  "embed_test_done": "08:22:54",
+  "per_layer": [
+    {
+      "layer": 0,
+      "auc": 0.7904
+    },
+    {
+      "layer": 1,
+      "auc": 0.8825
+    },
+    {
+      "layer": 2,
+      "auc": 0.8692
+    },
+    {
+      "layer": 3,
+      "auc": 0.8817
+    },
+    {
+      "layer": 4,
+      "auc": 0.8681
+    },
+    {
+      "layer": 5,
+      "auc": 0.8728
+    },
+    {
+      "layer": 6,
+      "auc": 0.8781
+    },
+    {
+      "layer": 7,
+      "auc": 0.8669
+    },
+    {
+      "layer": 8,
+      "auc": 0.8672
+    },
+    {
+      "layer": 9,
+      "auc": 0.8753
+    },
+    {
+      "layer": 10,
+      "auc": 0.8652
+    },
+    {
+      "layer": 11,
+      "auc": 0.8737
+    },
+    {
+      "layer": 12,
+      "auc": 0.8546
+    }
+  ],
+  "best_layer": 1,
+  "best_auc": 0.8825,
+  "delta_vs_target": -0.0575,
+  "finished": "2026-07-09 08:23:42"
+}
