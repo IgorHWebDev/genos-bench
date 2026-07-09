@@ -101,8 +101,7 @@ def main():
     per_layer = []
     for L in range(n_layers):
         sc = StandardScaler().fit(Xtr_L[L])
-        clf = LogisticRegression(max_iter=2000, C=1.0,
-                                 multi_class="ovr" if multiclass else "auto")
+        clf = LogisticRegression(max_iter=2000, C=1.0)  # sklearn>=1.7 removed multi_class (auto-multinomial)
         clf.fit(sc.transform(Xtr_L[L]), ytr)
         if multiclass:
             proba = clf.predict_proba(sc.transform(Xte_L[L]))
