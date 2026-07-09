@@ -116,10 +116,11 @@ def main():
     if args.head in ("logreg", "both"):
         from sklearn.linear_model import LogisticRegression
         from sklearn.preprocessing import StandardScaler
+        sub = np.random.default_rng(42).permutation(len(ytr))[:min(6000, len(ytr))]  # cheap linear baseline
         pl = []
         for L in range(n_layers):
-            sc = StandardScaler().fit(Xtr_L[L])
-            clf = LogisticRegression(max_iter=2000, C=1.0).fit(sc.transform(Xtr_L[L]), ytr)
+            sc = StandardScaler().fit(Xtr_L[L][sub])
+            clf = LogisticRegression(max_iter=500, C=1.0).fit(sc.transform(Xtr_L[L][sub]), ytr[sub])
             pl.append({"layer": L, "auc": round(float(auc_of(clf.predict_proba(sc.transform(Xte_L[L])))), 4)})
             res["logreg_per_layer"] = pl; save()
         b = max(pl, key=lambda d: d["auc"])
