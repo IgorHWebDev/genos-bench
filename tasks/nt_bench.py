@@ -34,19 +34,25 @@ def main():
     from datasets import load_dataset
     from transformers import AutoModel, AutoTokenizer
 
-    # load dataset (revised first, then original)
-    ds = None
-    for repo in ("InstaDeepAI/nucleotide_transformer_downstream_tasks_revised",
-                 "InstaDeepAI/nucleotide_transformer_downstream_tasks"):
+    # dataset is a single 'default' config with a 'task' column -> load + filter by task.
+    # original repo has plain histone names (H3, H4...); revised uses ENCODE names.
+    tr = te = None
+    for repo in ("InstaDeepAI/nucleotide_transformer_downstream_tasks",
+                 "InstaDeepAI/nucleotide_transformer_downstream_tasks_revised"):
         try:
-            ds = load_dataset(repo, args.task)
+            d = load_dataset(repo)  # columns: sequence, name, label, task
+            avail = sorted(set(d["train"]["task"]))
+            if args.task not in avail:
+                res.setdefault("available_tasks", {})[repo.split("/")[-1]] = avail
+                continue
+            tr = d["train"].filter(lambda r: r["task"] == args.task)
+            te = d["test"].filter(lambda r: r["task"] == args.task)
             res["dataset_repo"] = repo
             break
         except Exception as e:
             res["load_error_" + repo.split("/")[-1]] = str(e)[:200]
-    if ds is None:
-        save(); print("dataset load failed", flush=True); return
-    tr, te = ds["train"], ds["test"]
+    if tr is None:
+        save(); print("task not found; see available_tasks", flush=True); return
     res["n_train"], res["n_test"] = len(tr), len(te)
     print(f"{args.task}: train={len(tr)} test={len(te)} repo={res['dataset_repo']}", flush=True)
     save()
@@ -80,7 +86,8 @@ def main():
 
     seq_key = "sequence" if "sequence" in tr.column_names else tr.column_names[0]
     lab_key = "label" if "label" in tr.column_names else tr.column_names[-1]
-    ytr = np.array(tr[lab_key]); yte = np.array(te[lab_key])
+    ytr = np.array([int(x) for x in tr[lab_key]])   # labels are strings '0'/'1'
+    yte = np.array([int(x) for x in te[lab_key]])
     print(f"columns={tr.column_names} seq_key={seq_key} lab_key={lab_key}", flush=True)
 
     Xtr_L = embed_all_layers(tr[seq_key]); res["embed_train_done"] = time.strftime("%T"); save()
